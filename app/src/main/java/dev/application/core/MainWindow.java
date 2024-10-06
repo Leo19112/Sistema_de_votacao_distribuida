@@ -123,41 +123,51 @@ public class MainWindow extends JFrame {
     }
 
     private JMenu createConfigMenu() {
-        JMenu configMenu = new JMenu("Configuração");
+        JMenu configMenu = new JMenu("Config");
     
-        JMenuItem standardItem = new JMenuItem("Padrão");
+        JMenuItem standardItem = new JMenuItem("Pattern");
         standardItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Define o padrão padrão da animação
-                animationManager.setPattern(0);
+                // Solicita ao usuário um novo tipo de padrão
+                String input = JOptionPane.showInputDialog(MainWindow.this, "Enter the animation pattern type (0-2):\n0 - Diagonal\n1 - Horizontal\n2 - Vertical", "Pattern", JOptionPane.PLAIN_MESSAGE);
+                try {
+                    int patternType = Integer.parseInt(input);
+                    if (patternType >= 0 && patternType <= 2) {
+                        animationManager.setPattern(patternType);
+                    } else {
+                        JOptionPane.showMessageDialog(MainWindow.this, "Please, insert a number between 0 and 2.");
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(MainWindow.this, "Invalid input.");
+                }
             }
         });
     
-        JMenuItem colorItem = new JMenuItem("Cores");
+        JMenuItem colorItem = new JMenuItem("Colors");
         colorItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Abre um seletor de cores
-                Color newColor = JColorChooser.showDialog(MainWindow.this, "Escolha uma cor", Color.BLUE);
+                Color newColor = JColorChooser.showDialog(MainWindow.this, "Choose a color", Color.BLUE);
                 if (newColor != null) {
                     animationManager.setColor(newColor);
                 }
             }
         });
     
-        JMenuItem velocityItem = new JMenuItem("Velocidade");
+        JMenuItem velocityItem = new JMenuItem("Velocity");
         velocityItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Solicita ao usuário uma nova velocidade
-                String input = JOptionPane.showInputDialog(MainWindow.this, "Digite a velocidade da animação (1-100):", "Velocidade", JOptionPane.PLAIN_MESSAGE);
+                String input = JOptionPane.showInputDialog(MainWindow.this, "Enter the animation speed (1-100):", "Speed", JOptionPane.PLAIN_MESSAGE);
                 try {
                     int speed = Integer.parseInt(input);
                     if (speed >= 1 && speed <= 100) {
                         animationManager.setSpeed(speed);
                     } else {
-                        JOptionPane.showMessageDialog(MainWindow.this, "Por favor, insira um número entre 1 e 100.");
+                        JOptionPane.showMessageDialog(MainWindow.this, "Please, insert a number between 1 and 100.");
                     }
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(MainWindow.this, "Entrada inválida.");
+                    JOptionPane.showMessageDialog(MainWindow.this, "Invalid input.");
                 }
             }
         });
