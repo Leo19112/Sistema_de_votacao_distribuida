@@ -1,4 +1,8 @@
 package dev.application.file.interfaces;
 
-public interface ITextFileHandler {
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+
+public interface ITextFileHandler extends IFileHandler {
+    public BufferedReader loadTextFromFile() throws FileNotFoundException;
 }
